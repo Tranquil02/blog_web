@@ -9,18 +9,14 @@ import BlogGrid from '@/components/blog/BlogGrid';
 import Newsletter from '@/components/Newsletter';
 import Connect from '@/components/Connect';
 import Footer from '@/components/footer';
-import ArticleView from '@/components/ArticleView';
 
 import { ARTICLES } from '@/data/articles';
 import SectionReveal from '@/components/ui/SectionReveal';
 
 export default function Home() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const blogId = searchParams.get('blog');
 
   const [isScrolled, setIsScrolled] = useState(false);
-  const [selectedPost, setSelectedPost] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -28,34 +24,9 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (blogId) {
-      const post = ARTICLES.find(
-        (item) => String(item.id) === String(blogId)
-      );
-      setSelectedPost(post || null);
-    } else {
-      setSelectedPost(null);
-    }
-  }, [blogId]);
-
   const openPost = (post) => {
-    router.push(`/?blog=${post.id}`, { scroll: false });
+    router.push(`/blog/${post.id}`, { scroll: false });
   };
-
-  const closePost = () => {
-    router.push('/', { scroll: false });
-  };
-
-  if (selectedPost) {
-    return (
-      <>
-        {/* <Navbar isScrolled={isScrolled} /> */}
-        <ArticleView post={selectedPost} onBack={closePost} />
-        <Footer />
-      </>
-    );
-  }
 
   return (
     <main className="min-h-screen">
