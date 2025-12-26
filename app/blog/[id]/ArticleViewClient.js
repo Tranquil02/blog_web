@@ -1,0 +1,176 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import {
+  ArrowLeft,
+  Heart,
+  Bookmark,
+  Share2,
+  User,
+  Clock,
+  Send,
+} from 'lucide-react';
+
+export default function ArticleViewClient({ post }) {
+  const router = useRouter();
+
+  const [liked, setLiked] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [input, setInput] = useState('');
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
+
+  if (!post) return null;
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: post.title,
+        text: post.excerpt,
+        url: window.location.href,
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+    }
+  };
+
+  const addComment = () => {
+    if (!input.trim()) return;
+    setComments([...comments, { id: Date.now(), text: input }]);
+    setInput('');
+  };
+
+  return (
+    <article className="bg-black px-6 py-16">
+      <div className="max-w-3xl mx-auto">
+
+        {/* Back */}
+        <button
+          onClick={() => router.back()}
+          className="flex items-center gap-2 text-sm text-zinc-500 hover:text-[var(--gold)] mb-6"
+        >
+          <ArrowLeft size={16} />
+          Back
+        </button>
+
+        {/* Header */}
+        <header className="mb-10">
+          <div className="flex items-center gap-3 text-xs uppercase tracking-widest text-[var(--gold)] mb-3">
+            <span>{post.category}</span>
+            <span className="w-6 h-px bg-zinc-700" />
+            <span className="text-zinc-500">{post.date}</span>
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl font-playfair italic text-white leading-tight mb-4">
+            {post.title}
+          </h1>
+
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-[var(--gold)] flex items-center justify-center">
+                <User size={16} className="text-black" />
+              </div>
+              <div className="text-sm">
+                <p className="text-white">{post.author}</p>
+                <p className="text-zinc-500 flex items-center gap-1">
+                  <Clock size={12} />
+                  {post.readTime}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setLiked(!liked)}
+                className={`p-2 rounded-full border ${
+                  liked
+                    ? 'border-red-500 text-red-500'
+                    : 'border-white/10 text-zinc-400'
+                }`}
+              >
+                <Heart size={18} fill={liked ? 'currentColor' : 'none'} />
+              </button>
+
+              <button
+                onClick={() => setSaved(!saved)}
+                className={`p-2 rounded-full border ${
+                  saved
+                    ? 'border-[var(--gold)] text-[var(--gold)]'
+                    : 'border-white/10 text-zinc-400'
+                }`}
+              >
+                <Bookmark size={18} fill={saved ? 'currentColor' : 'none'} />
+              </button>
+
+              <button
+                onClick={handleShare}
+                className="p-2 rounded-full border border-white/10 text-zinc-400"
+              >
+                <Share2 size={18} />
+              </button>
+            </div>
+          </div>
+        </header>
+
+        {/* Image */}
+        <div className="relative aspect-[16/9] rounded-xl overflow-hidden mb-10">
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            priority
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 800px"
+          />
+        </div>
+
+        {/* Content */}
+        <section className="text-zinc-300 leading-relaxed space-y-6">
+          <p className="text-xl font-playfair italic text-white">
+            {post.excerpt}
+          </p>
+          <p>{post.content}</p>
+        </section>
+
+        {/* Comments */}
+        <section className="mt-16">
+          <h2 className="text-2xl font-playfair italic text-white mb-6">
+            Discussion
+          </h2>
+
+          <div className="space-y-4 mb-6">
+            {comments.map((c) => (
+              <div
+                key={c.id}
+                className="p-4 rounded-lg bg-zinc-900 border border-white/5"
+              >
+                {c.text}
+              </div>
+            ))}
+          </div>
+
+          <div className="flex gap-3">
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Write a comment…"
+              className="flex-1 px-4 py-3 rounded-full bg-zinc-900 border border-white/10 text-white outline-none focus:border-[var(--gold)]"
+            />
+            <button
+              onClick={addComment}
+              className="w-11 h-11 rounded-full bg-[var(--gold)] flex items-center justify-center"
+            >
+              <Send size={16} className="text-black" />
+            </button>
+          </div>
+        </section>
+
+      </div>
+    </article>
+  );
+}
