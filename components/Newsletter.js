@@ -1,20 +1,50 @@
 export default function Newsletter() {
   return (
-    <section className="py-32 text-center px-6">
-      <h2 className="text-6xl md:text-8xl font-playfair italic text-white">
-        Join the <span className="gold-shimmer not-italic font-black">Inner Circle</span>
+    <section className="py-32 text-center px-6 bg-[var(--bg-primary)]">
+      <h2 className="text-6xl md:text-8xl font-editorial italic text-[var(--text-heading)]">
+        This is not a{" "}
+        <span className="gold-shimmer not-italic font-black">
+          Newsletter
+        </span>
+        .
       </h2>
 
-      <form className="mt-12 flex justify-center gap-4">
+      <p className="mt-8 max-w-2xl mx-auto text-[var(--text-secondary)] text-lg md:text-2xl italic font-editorial">
+        A quiet space for readers who value restraint, depth,  
+        and ideas worth sitting with.
+      </p>
+
+      <form className="mt-12 flex justify-center gap-4 flex-wrap">
         <input
           type="email"
-          placeholder="you@exclusive.com"
-          className="px-6 py-4 rounded-full bg-zinc-900 border border-white/10 text-white"
+          placeholder="identity@luxury.com"
+          className="
+            px-6 py-4 rounded-full
+            bg-[var(--bg-secondary)]
+            border border-[var(--border-light)]
+            text-[var(--text-primary)]
+            outline-none
+            focus:border-[var(--accent-secondary)]
+          "
         />
-        <button className="px-8 py-4 rounded-full bg-[var(--gold)] text-black font-black uppercase text-xs tracking-widest">
-          Subscribe
+        <button
+          className="
+            px-8 py-4 rounded-full
+            bg-[var(--accent-secondary)]
+            text-[var(--bg-primary)]
+            font-black uppercase
+            text-xs tracking-widest
+            hover:bg-[var(--text-heading)]
+            transition-colors
+          "
+        >
+          Enter
         </button>
       </form>
+
+      <p className="mt-4 text-xs text-[var(--text-muted)]">
+        No cadence. No noise. Unsubscribe anytime.
+      </p>
     </section>
   );
 }

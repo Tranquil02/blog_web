@@ -5,7 +5,7 @@ import Footer from '@/components/footer';
 export default function ConnectUs() {
     return (
         <>
-            <Navbar />
+            {/* <Navbar isScrolled={false} /> */}
             <Connect />
             <Footer />
         </>

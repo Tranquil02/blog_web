@@ -1,26 +1,13 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-
-export default function SectionReveal({ children, delay = 0 }) {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => entry.isIntersecting && setVisible(true),
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
+export default function SectionReveal({ children, delay = 0, className = "" }) {
   return (
     <div
-      ref={ref}
+      data-scroll
+      data-scroll-class="is-visible"
+      data-scroll-repeat
       style={{ transitionDelay: `${delay}ms` }}
-      className={`reveal-up ${visible ? 'visible' : ''}`}
+      className={`reveal-up ${className}`}
     >
       {children}
     </div>

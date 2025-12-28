@@ -1,15 +1,19 @@
 import "./globals.css";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
+import LocomotiveProvider from '@/Provider/Locomotiveprovider';
+import NavbarWrapper from '@/components/NavbarWrapper';
+import NavObserver from '@/components/Navobserver';
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
 });
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
-  style: "italic",
+  display: "swap",
 });
 
 export const metadata = {
@@ -18,10 +22,28 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${playfair.variable} font-sans`}>
-        {children}
+    <html
+      lang="en"
+      className="antialiased"
+    >
+      <body
+        className={`
+          ${inter.variable}
+          ${playfair.variable}
+          font-sans
+          bg-[var(--bg-primary)]
+          text-[var(--text-primary)]
+        `}
+      >
+        <NavbarWrapper />
+        <NavObserver />
+
+        <LocomotiveProvider>
+          <div id="nav-sentinel" className="h-[50px]" aria-hidden="true" />
+          {children}
+        </LocomotiveProvider>
       </body>
     </html>
   );

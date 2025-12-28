@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   ArrowLeft,
   Heart,
@@ -8,18 +8,15 @@ import {
   Share2,
   User,
   Clock,
-  Send
-} from 'lucide-react';
+  Send,
+} from "lucide-react";
 
 export default function ArticleView({ post, onBack }) {
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
   const [comments, setComments] = useState([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [post]);
 
   if (!post) return null;
 
@@ -38,40 +35,40 @@ export default function ArticleView({ post, onBack }) {
   const addComment = () => {
     if (!input.trim()) return;
     setComments([...comments, { id: Date.now(), text: input }]);
-    setInput('');
+    setInput("");
   };
 
   return (
-    <article className="bg-black px-6 py-16">
+    <article className="bg-[var(--bg-primary)] px-6 py-16">
       <div className="max-w-3xl mx-auto">
 
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-sm text-zinc-500 hover:text-[var(--gold)] mb-6"
+          className="flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[var(--accent-secondary)] mb-6"
         >
           <ArrowLeft size={16} />
           Back
         </button>
 
         <header className="mb-10">
-          <div className="flex items-center gap-3 text-xs uppercase tracking-widest text-[var(--gold)] mb-3">
+          <div className="flex items-center gap-3 text-xs uppercase tracking-widest text-[var(--accent-secondary)] mb-3">
             <span>{post.category}</span>
-            <span className="w-6 h-px bg-zinc-700" />
-            <span className="text-zinc-500">{post.date}</span>
+            <span className="w-6 h-px bg-[var(--border-light)]" />
+            <span className="text-[var(--text-muted)]">{post.date}</span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl font-playfair italic text-white leading-tight mb-4">
+          <h1 className="text-4xl sm:text-5xl font-editorial italic text-[var(--text-heading)] leading-tight mb-4">
             {post.title}
           </h1>
 
           <div className="flex items-center justify-between gap-4 flex-wrap">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-[var(--gold)] flex items-center justify-center">
-                <User size={16} className="text-black" />
+              <div className="w-9 h-9 rounded-full bg-[var(--accent-secondary)] flex items-center justify-center">
+                <User size={16} className="text-[var(--bg-primary)]" />
               </div>
               <div className="text-sm">
-                <p className="text-white">{post.author}</p>
-                <p className="text-zinc-500 flex items-center gap-1">
+                <p className="text-[var(--text-heading)]">{post.author}</p>
+                <p className="text-[var(--text-muted)] flex items-center gap-1">
                   <Clock size={12} />
                   {post.readTime}
                 </p>
@@ -83,27 +80,27 @@ export default function ArticleView({ post, onBack }) {
                 onClick={() => setLiked(!liked)}
                 className={`p-2 rounded-full border ${
                   liked
-                    ? 'border-red-500 text-red-500'
-                    : 'border-white/10 text-zinc-400'
+                    ? "border-red-500 text-red-500"
+                    : "border-[var(--border-light)] text-[var(--text-muted)]"
                 }`}
               >
-                <Heart size={18} fill={liked ? 'currentColor' : 'none'} />
+                <Heart size={18} fill={liked ? "currentColor" : "none"} />
               </button>
 
               <button
                 onClick={() => setSaved(!saved)}
                 className={`p-2 rounded-full border ${
                   saved
-                    ? 'border-[var(--gold)] text-[var(--gold)]'
-                    : 'border-white/10 text-zinc-400'
+                    ? "border-[var(--accent-secondary)] text-[var(--accent-secondary)]"
+                    : "border-[var(--border-light)] text-[var(--text-muted)]"
                 }`}
               >
-                <Bookmark size={18} fill={saved ? 'currentColor' : 'none'} />
+                <Bookmark size={18} fill={saved ? "currentColor" : "none"} />
               </button>
 
               <button
                 onClick={handleShare}
-                className="p-2 rounded-full border border-white/10 text-zinc-400"
+                className="p-2 rounded-full border border-[var(--border-light)] text-[var(--text-muted)]"
               >
                 <Share2 size={18} />
               </button>
@@ -120,15 +117,15 @@ export default function ArticleView({ post, onBack }) {
           />
         </div>
 
-        <section className="text-zinc-300 leading-relaxed space-y-6">
-          <p className="text-xl font-playfair italic text-white">
+        <section className="text-[var(--text-primary)] leading-relaxed space-y-6">
+          <p className="text-xl font-editorial italic text-[var(--text-heading)]">
             {post.excerpt}
           </p>
-          <p>{post.content}</p>
+          <p className="text-[var(--text-secondary)]">{post.content}</p>
         </section>
 
         <section className="mt-16">
-          <h2 className="text-2xl font-playfair italic text-white mb-6">
+          <h2 className="text-2xl font-editorial italic text-[var(--text-heading)] mb-6">
             Discussion
           </h2>
 
@@ -136,7 +133,7 @@ export default function ArticleView({ post, onBack }) {
             {comments.map((c) => (
               <div
                 key={c.id}
-                className="p-4 rounded-lg bg-zinc-900 border border-white/5"
+                className="p-4 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-light)] text-[var(--text-primary)]"
               >
                 {c.text}
               </div>
@@ -148,13 +145,20 @@ export default function ArticleView({ post, onBack }) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Write a comment…"
-              className="flex-1 px-4 py-3 rounded-full bg-zinc-900 border border-white/10 text-white outline-none focus:border-[var(--gold)]"
+              className="
+                flex-1 px-4 py-3 rounded-full
+                bg-[var(--bg-secondary)]
+                border border-[var(--border-light)]
+                text-[var(--text-primary)]
+                outline-none
+                focus:border-[var(--accent-secondary)]
+              "
             />
             <button
               onClick={addComment}
-              className="w-11 h-11 rounded-full bg-[var(--gold)] flex items-center justify-center"
+              className="w-11 h-11 rounded-full bg-[var(--accent-secondary)] flex items-center justify-center"
             >
-              <Send size={16} className="text-black" />
+              <Send size={16} className="text-[var(--bg-primary)]" />
             </button>
           </div>
         </section>
