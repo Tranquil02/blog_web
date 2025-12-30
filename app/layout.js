@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Inter, Playfair_Display } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import LocomotiveProvider from '@/Provider/Locomotiveprovider';
 import NavbarWrapper from '@/components/NavbarWrapper';
 import NavObserver from '@/components/Navobserver';
@@ -44,6 +45,7 @@ export default function RootLayout({ children }) {
           <div id="nav-sentinel" className="h-[50px]" aria-hidden="true" />
           {children}
         </LocomotiveProvider>
+        <Analytics />
       </body>
     </html>
   );
