@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Inter, Playfair_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import LocomotiveProvider from '@/Provider/Locomotiveprovider';
 import NavbarWrapper from '@/components/NavbarWrapper';
 import NavObserver from '@/components/Navobserver';
@@ -46,6 +47,7 @@ export default function RootLayout({ children }) {
           {children}
         </LocomotiveProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
