@@ -15,7 +15,7 @@ export default function SetPassword() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black">
+    <div className="min-h-screen flex items-center justify-center bg-[--bg-primary]">
       <div className="w-[360px] p-6 bg-zinc-900 rounded-xl">
         <h1 className="text-white mb-4">Set Password</h1>
         <input
