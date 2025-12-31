@@ -1,10 +1,8 @@
-import { requireAdmin } from '@/lib/auth';
-import Sidebar from '@/components/admin/sidebar';
-import Navbar from '@/components/admin/topbar';
+
 import { FileText, ChevronRight, ExternalLink, Clock, TrendingUp } from 'lucide-react';
 
 export default async function AdminPage() {
-  const user = await requireAdmin();
+  
 
   const blogCount = 42;
 

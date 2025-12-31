@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { Lock, User, Loader2, Shield } from 'lucide-react';
@@ -10,6 +10,19 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
+
+  useEffect(() => {
+    const checkAuth = async()=>{
+      try {
+        const response = await axios.get('/api/admin/auth/me');
+        if (response.data.user) {
+          router.replace('/main/admin');
+        }
+      } catch (err) {
+        console.error('Auth check failed:', err);
+      }
+    }
+  }, []);
 
 
   const handleLogin = async (e) => {
@@ -31,6 +44,8 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+
+  
 
   return (
     // Background is deep black to match a dark layout
