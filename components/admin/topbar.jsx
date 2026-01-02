@@ -15,15 +15,14 @@ export default function Navbar({ email }) {
             <Bell size={20} />
           </button>
           
-          <div className="h-8 w-[1px] bg-gray-200 mx-2"></div>
-
+          {/* <div className="h-8 w-[1px] bg-gray-200 mx-2"></div>
           <a 
-            href="/admin/blogs/new" 
+            href="admin/blogs/new" 
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-sm shadow-blue-200"
           >
             <PlusCircle size={18} />
             New Post
-          </a>
+          </a> */}
         </div>
       </div>
     </header>

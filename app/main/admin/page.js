@@ -1,8 +1,8 @@
 
-import { FileText, ChevronRight, ExternalLink, Clock, TrendingUp } from 'lucide-react';
+import { FileText, ChevronRight, ExternalLink, Clock, TrendingUp, PlusCircle } from 'lucide-react';
 
 export default async function AdminPage() {
-  
+
 
   const blogCount = 42;
 
@@ -11,6 +11,15 @@ export default async function AdminPage() {
       {/* 4. Page Content */}
       <main className="p-8">
         <div className="max-w-6xl mx-auto space-y-8">
+          <div className="flex items-center justify-end absolute top-25 right-8">
+            <a
+              href="admin/blogs/new"
+              className="flex items-center -2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all shadow-sm shadow-blue-200"
+            >
+              <PlusCircle size={18} />
+              New Post
+            </a>
+          </div>
 
           {/* Stats Overview */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -26,8 +35,10 @@ export default async function AdminPage() {
               <p className="text-sm font-medium text-gray-500">Total Blog Posts</p>
               <p className="text-2xl font-bold text-gray-900 mt-1">{blogCount ?? 0}</p>
             </div>
+
             {/* Add more stat cards here if needed */}
           </div>
+
 
           {/* Management Section */}
           <section className="bg-white rounded-2xl border border-gray-100 shadow-sm">
@@ -36,9 +47,12 @@ export default async function AdminPage() {
                 <h2 className="text-lg font-bold text-gray-900">Recent Blogs</h2>
                 <p className="text-sm text-gray-500">Manage and edit your latest content</p>
               </div>
-              <a href="/admin/blogs" className="text-sm text-blue-600 font-semibold hover:text-blue-700 flex items-center gap-1">
-                View All Posts <ChevronRight size={16} />
-              </a>
+              <div className="flex items-center gap-4">
+
+                <a href="/main/admin/blogs" className="text-sm text-blue-600 font-semibold hover:text-blue-700 flex items-center gap-1">
+                  View All Posts <ChevronRight size={16} />
+                </a>
+              </div>
             </div>
 
             <div className="divide-y divide-gray-50">
@@ -69,8 +83,8 @@ export default async function AdminPage() {
             </div>
           </section>
 
-        </div>
-      </main>
+        </div >
+      </main >
     </>
   );
 }  

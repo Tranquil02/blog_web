@@ -9,7 +9,7 @@ export default async function AdminLayout({ children }) {
 
   return (
     <AdminGuard>
-      <div className="min-h-screen bg-[#f8fafc] flex">
+      <div className="min-h-screen bg-[#fff] flex">
 
         <Sidebar />
 
