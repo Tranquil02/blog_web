@@ -1,20 +1,16 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import BlogGrid from "@/components/blog/BlogGrid";
-import { getAllBlogs } from "@/lib/blog";
 import Section from "@/components/Section";
-import useScrollState from "@/hooks/useScrollState";
 
 export default function BlogPage() {
   const router = useRouter();
-  const blogs = getAllBlogs();
-  const isScrolled = useScrollState();
+  // const blogs = getAllBlogs();
 
   const openPost = (post) => {
-    router.push(`/blog/${post.id}`);
+    router.push(`/blog/${post.id}`, { scroll: false });
   };
 
   const featured = blogs[0];

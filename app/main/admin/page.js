@@ -1,10 +1,19 @@
 
+import { createClient } from '@/lib/supabase/serverOnly';
 import { FileText, ChevronRight, ExternalLink, Clock, TrendingUp, PlusCircle } from 'lucide-react';
 
 export default async function AdminPage() {
+  const supabase = await createClient();
 
+  // Fetch blog count from the database
+  // This is a placeholder; replace with actual data fetching logic
+  const { data: blogs, error } = await supabase.
+    from('blogs').
+    select('*').
+    order('created_at', { ascending: false });
+    
+  const blogCount = blogs?.length || 0;
 
-  const blogCount = 42;
 
   return (
     <>
@@ -28,9 +37,6 @@ export default async function AdminPage() {
                 <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
                   <FileText size={20} />
                 </div>
-                <span className="text-green-500 text-xs font-medium flex items-center gap-1">
-                  <TrendingUp size={12} /> +12%
-                </span>
               </div>
               <p className="text-sm font-medium text-gray-500">Total Blog Posts</p>
               <p className="text-2xl font-bold text-gray-900 mt-1">{blogCount ?? 0}</p>
@@ -56,34 +62,69 @@ export default async function AdminPage() {
             </div>
 
             <div className="divide-y divide-gray-50">
-              {/* Individual Blog Row */}
-              <div className="p-4 hover:bg-gray-50 transition-colors flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-gray-400">
-                    <FileText size={24} />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Understanding React Server Components</h4>
-                    <div className="flex items-center gap-3 mt-1 text-xs text-gray-400 font-medium">
-                      <span className="flex items-center gap-1"><Clock size={12} /> Dec 28, 2025</span>
-                      <span className="bg-green-50 text-green-600 px-2 py-0.5 rounded-full uppercase tracking-wider text-[10px]">Published</span>
+              {blogs.length === 0 ? (
+                <div className="p-6 text-center text-sm text-gray-400">
+                  No blogs found
+                </div>
+              ) : (
+                blogs.map((blog) => (
+                  <div
+                    key={blog.id}
+                    className="p-4 hover:bg-gray-50 transition-colors flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-gray-400">
+                        <FileText size={24} />
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-gray-900">
+                          {blog.title}
+                        </h4>
+
+                        <div className="flex items-center gap-3 mt-1 text-xs text-gray-400 font-medium">
+                          <span className="flex items-center gap-1">
+                            <Clock size={12} />
+                            {new Date(blog.created_at).toLocaleDateString()}
+                          </span>
+
+                          <span
+                            className={`px-2 py-0.5 rounded-full uppercase tracking-wider text-[10px]
+                  ${blog.status === 'published'
+                                ? 'bg-green-50 text-green-600'
+                                : 'bg-yellow-50 text-yellow-600'
+                              }`}
+                          >
+                            {blog.status}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <a
+                        href={`/main/admin/blogs/edit/${blog.id}`}
+                        className="px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-lg border border-gray-200"
+                      >
+                        Edit
+                      </a>
+
+                      <a
+                        href={`/blog/${blog.slug}`}
+                        target="_blank"
+                        className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
+                      >
+                        <ExternalLink size={18} />
+                      </a>
                     </div>
                   </div>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <a href="/admin/blogs/edit/1" className="px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-lg transition-all border border-gray-200">
-                    Edit
-                  </a>
-                  <button className="p-2 text-gray-400 hover:text-blue-600 transition-colors">
-                    <ExternalLink size={18} />
-                  </button>
-                </div>
-              </div>
+                ))
+              )}
             </div>
-          </section>
 
-        </div >
+          </section>
+        </div>
+
       </main >
     </>
   );

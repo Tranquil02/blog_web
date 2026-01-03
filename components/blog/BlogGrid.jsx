@@ -3,17 +3,22 @@ import BlogCard from "./BlogCard";
 import Link from "next/link";
 
 const BlogGrid = ({ onSelect, posts }) => {
-  const blogArticles = posts.slice(0, 6);
+  const blogArticles = posts || [];
 
   return (
     <>
       <div className="max-w-[1600px] mx-auto w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 mt-8">
-          {blogArticles.map((post, i) => (
-            <SectionReveal key={post.id} delay={i * 100}>
-              <BlogCard post={post} onSelect={onSelect} />
-            </SectionReveal>
-          ))}
+          {blogArticles.length > 0 ? (
+
+            blogArticles.map((post, i) => (
+              <SectionReveal key={post.id} delay={i * 100}>
+                <BlogCard post={post} onSelect={onSelect} />
+              </SectionReveal>
+            ))
+
+          ) : <h2 className="m-auto text-3xl">No Blogs to show</h2>
+          }
         </div>
       </div>
 

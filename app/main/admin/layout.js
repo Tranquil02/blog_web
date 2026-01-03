@@ -1,14 +1,15 @@
 
-import AdminGuard from '../../../components/admin/adminGuard';
 import Sidebar from '../../../components/admin/sidebar';
 import Navbar from '../../../components/admin/topbar';
+import { requireAdmin } from '../../../lib/auth';
 
 
 export default async function AdminLayout({ children }) {
-
+  const user = await requireAdmin();
+  // console.log(user);
 
   return (
-    <AdminGuard>
+    // <AdminGuard>
       <div className="min-h-screen bg-[#fff] flex">
 
         <Sidebar />
@@ -16,7 +17,7 @@ export default async function AdminLayout({ children }) {
         {/* 2. Content Wrapper */}
         <div className="flex-1 flex flex-col">
 
-          <Navbar email={"prashant"} />
+          <Navbar email={user.email} />
 
           {/* 4. Page Content */}
           <main className="p-8">
@@ -24,6 +25,6 @@ export default async function AdminLayout({ children }) {
           </main>
         </div>
       </div>
-    </AdminGuard>
+    // </AdminGuard>
   );
 }

@@ -1,3 +1,6 @@
+import {createClient} from '@/lib/supabase/client';
+
+
 export const ARTICLES = [
   {
     id: 1283,
@@ -98,3 +101,6 @@ export const ARTICLES = [
 ];
 
 export const CATEGORIES = ["All", "Architecture", "Intelligence", "Systems"];
+
+const supabase = createClient();
+const BLogs = await  supabase.from 

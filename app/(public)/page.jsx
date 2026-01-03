@@ -1,28 +1,36 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import {  useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import Navbar from '@/components/navbar';
 import Hero from '@/components/Hero';
 import BlogGrid from '@/components/blog/BlogGrid';
 import Newsletter from '@/components/Newsletter';
-// import Subscribe from '@/components/SubscribeSection/SubscribeSection';
 import Connect from '@/components/Connect';
 import Footer from '@/components/footer';
 import SectionReveal from '@/components/ui/SectionReveal';
+import axios from 'axios';
 
-import { ARTICLES } from '@/data/articles';
-import useScrollState from '@/hooks/useScrollState';
-import LocomotiveProvider from '@/Provider/Locomotiveprovider';
 
 export default function Home() {
   const router = useRouter();
-  const isScrolled = useScrollState();
+  const [blogs,setBlogs]= useState([]);
+
+  useEffect (()=>{
+    async function fetchBlogs (){
+      const data = await axios.get('/api/blog/getAll');
+      setBlogs(data);
+      console.log(data);
+    }
+    fetchBlogs();
+  },[])
+  // const isScrolled = useScrollState();
 
   const openPost = useCallback((post) => {
     router.push(`/blog/${post.id}`, { scroll: false });
   }, [router]);
+
+
 
   return (
     // <LocomotiveProvider>
@@ -74,7 +82,7 @@ export default function Home() {
             </p>
           </SectionReveal>
 
-          <BlogGrid onSelect={openPost} posts={ARTICLES} />
+          <BlogGrid onSelect={openPost} posts={blogs} />
         </section>
 
         {/* <Subscribe /> */}

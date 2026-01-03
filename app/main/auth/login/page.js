@@ -22,6 +22,7 @@ export default function LoginPage() {
         console.error('Auth check failed:', err);
       }
     }
+    checkAuth();
   }, []);
 
 
