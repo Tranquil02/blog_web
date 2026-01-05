@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 
 import "../globals.css";
 import { Inter, Playfair_Display } from "next/font/google";
@@ -8,6 +8,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import LocomotiveProvider from '@/Provider/Locomotiveprovider';
 import NavbarWrapper from '@/components/NavbarWrapper';
 import NavObserver from '@/components/Navobserver';
+import Provider from '@/lib/tanstack_query';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,8 +37,10 @@ export default function PublicLayout({ children }) {
       <NavObserver />
 
       <LocomotiveProvider>
-        <div id="nav-sentinel" className="h-[50px]" aria-hidden="true" />
-        {children}
+        <Provider>
+          <div id="nav-sentinel" className="h-[50px]" aria-hidden="true" />
+          {children}
+        </Provider>
       </LocomotiveProvider>
 
       <Analytics />

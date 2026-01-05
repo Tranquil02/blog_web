@@ -3,9 +3,16 @@
 import Image from "next/image";
 import { User, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function BlogCard({ post, onSelect }) {
-  console.log(post)
+export default function BlogCard({ post }) {
+  const router = useRouter();
+
+
+  const onSelect = (post) => {
+    router.push(`/blog/${post.id}`, scroll = false)
+  }
+  // console.log(post)
   return (
     <article
       onClick={() => onSelect(post)}

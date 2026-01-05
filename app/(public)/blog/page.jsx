@@ -4,49 +4,37 @@ import { useRouter } from "next/navigation";
 import Footer from "@/components/footer";
 import BlogGrid from "@/components/blog/BlogGrid";
 import Section from "@/components/Section";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import { fetchFeaturedBlogs } from "../../../lib/api/blog";
 
 export default function BlogPage() {
   const router = useRouter();
-  // const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [data, setData] = useState([]);
 
-  useEffect(() => {
-    let isMounted = true;
+   const {
+    data,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["featured-blogs"],
+    queryFn: fetchFeaturedBlogs,
+  });
 
-    async function fetchBlogs() {
-      try {
-        const res = await axios.get('/api/blog/features');
-        console.log(res);
+  if (isLoading) {
+    return <div className="min-h-screen grid place-items-center">Loading…</div>;
+  }
 
-        if (isMounted) {
-          setData(res.data);
-        }
-      } catch (err) {
-        if (isMounted) {
-          setError('Failed to load blogs');
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
-    }
+  if (isError) {
+    return (
+      <div className="min-h-screen grid place-items-center text-red-500">
+        {error?.message || "Failed to load blogs"}
+      </div>
+    );
+  }
 
-    fetchBlogs();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  if (loading) return <div>Loading…</div>;
-  if (error) return <div>{error}</div>;
-  const { featured, trending, latest, mostViewed } = data;
+  console.log(data)
+  const { featured, trending=[], latest=[], mostViewed=[] } = data;
 
   const openPost = (post) => {
     router.push(`/blog/${post.id}`, { scroll: false });
@@ -96,6 +84,7 @@ export default function BlogPage() {
                   alt={featured?.title}
                   width={800}
                   height={400}
+                  priority
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
               )}
@@ -110,21 +99,21 @@ export default function BlogPage() {
             title="Trending Now"
             subtitle="Most talked about articles"
           >
-            <BlogGrid posts={trending} onSelect={openPost} />
+            <BlogGrid posts={trending} />
           </Section>
 
           <Section
             title="Latest Stories"
             subtitle="Fresh perspectives"
           >
-            <BlogGrid posts={latest} onSelect={openPost} />
+            <BlogGrid posts={latest} />
           </Section>
 
           <Section
             title="Most Read"
             subtitle="Reader favorites"
           >
-            <BlogGrid posts={mostViewed} onSelect={openPost} />
+            <BlogGrid posts={mostViewed} />
           </Section>
 
         </div>

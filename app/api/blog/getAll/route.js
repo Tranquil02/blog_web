@@ -4,5 +4,6 @@ import { getAllBlogs } from '@/lib/blog'
 
 export async function GET() {
   const blogs = await getAllBlogs()
+  // return blogs
   return NextResponse.json(blogs)
 }

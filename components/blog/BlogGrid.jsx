@@ -2,9 +2,9 @@ import SectionReveal from "../ui/SectionReveal";
 import BlogCard from "./BlogCard";
 import Link from "next/link";
 
-const BlogGrid = ({ onSelect, posts }) => {
+const BlogGrid = ({ posts }) => {
   const blogArticles = Array.isArray(posts) ? posts : [];
-  console.log(blogArticles)
+  // console.log(blogArticles)
 
 
   return (
@@ -15,7 +15,7 @@ const BlogGrid = ({ onSelect, posts }) => {
 
             blogArticles.map((post, i) => (
               <SectionReveal key={post.id} delay={i * 10}>
-                <BlogCard post={post} onSelect={onSelect} />
+                <BlogCard post={post} />
               </SectionReveal>
             ))
 
