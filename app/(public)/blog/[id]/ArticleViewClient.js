@@ -11,6 +11,7 @@ import {
   User,
   Clock,
   Send,
+  Calendar,
 } from "lucide-react";
 
 export default function ArticleViewClient({ post }) {
@@ -57,7 +58,8 @@ export default function ArticleViewClient({ post }) {
           <div className="flex items-center gap-3 text-xs uppercase tracking-widest text-[var(--accent-secondary)] mb-3">
             <span>{post.category}</span>
             <span className="w-6 h-px bg-[var(--border-light)]" />
-            <span className="text-[var(--text-muted)]">{post.date}</span>
+            <Calendar size={18} color="var(--text-muted)"/>
+            <span className="text-[var(--text-muted)]">{post.published_at}</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl font-editorial italic text-[var(--text-heading)] leading-tight mb-4">
@@ -73,7 +75,7 @@ export default function ArticleViewClient({ post }) {
                 <p className="text-[var(--text-heading)]">{post.author}</p>
                 <p className="text-[var(--text-muted)] flex items-center gap-1">
                   <Clock size={12} />
-                  {post.readTime}
+                  {post.reading_time} minutes
                 </p>
               </div>
             </div>
@@ -88,7 +90,9 @@ export default function ArticleViewClient({ post }) {
                 }`}
               >
                 <Heart size={18} fill={liked ? "currentColor" : "none"} />
+                
               </button>
+              {liked? post.likes+1:post.like}
 
               <button
                 onClick={() => setSaved(!saved)}
@@ -112,8 +116,9 @@ export default function ArticleViewClient({ post }) {
         </header>
 
         <div className="relative aspect-[16/9] rounded-xl overflow-hidden mb-10">
+        
           <Image
-            src={post.image}
+            src={post.cover_image}
             alt={post.title}
             fill
             priority
@@ -129,6 +134,8 @@ export default function ArticleViewClient({ post }) {
           <p className="text-[var(--text-secondary)]">{post.content}</p>
         </section>
 
+
+{/* //future */}
         <section className="mt-16">
           <h2 className="text-2xl font-editorial italic text-[var(--text-heading)] mb-6">
             Discussion

@@ -10,7 +10,7 @@ import Image from "next/image";
 
 export default function BlogPage() {
   const router = useRouter();
-  const [blogs, setBlogs] = useState([]);
+  // const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [data, setData] = useState([]);
