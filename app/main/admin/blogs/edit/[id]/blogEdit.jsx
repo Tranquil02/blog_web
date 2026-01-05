@@ -116,7 +116,8 @@ export default function EditBlogClient({ blog }) {
           <h1 className="text-2xl font-bold">Edit Blog</h1>
         </div>
 
-        <button disabled={loading} className="flex items-center gap-2">
+        <button disabled={loading} className="flex items-center gap-2"
+        onClick={handleSubmit}>
           <Save size={16} />
           {loading ? 'Updating…' : 'Update Blog'}
         </button>
@@ -180,6 +181,7 @@ export default function EditBlogClient({ blog }) {
 
             {!previewUrl ? (
               <button
+              type='button'
                 onClick={() => fileInputRef.current.click()}
                 className="w-full aspect-video border-2 border-dashed border-gray-100 rounded-2xl flex flex-col items-center justify-center gap-2 hover:border-blue-200 hover:bg-blue-50 transition-all group"
               >

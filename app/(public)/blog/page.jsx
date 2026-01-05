@@ -4,28 +4,53 @@ import { useRouter } from "next/navigation";
 import Footer from "@/components/footer";
 import BlogGrid from "@/components/blog/BlogGrid";
 import Section from "@/components/Section";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Image from "next/image";
 
 export default function BlogPage() {
   const router = useRouter();
-  // const blogs = getAllBlogs();
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function fetchBlogs() {
+      try {
+        const res = await axios.get('/api/blog/features');
+        console.log(res);
+
+        if (isMounted) {
+          setData(res.data);
+        }
+      } catch (err) {
+        if (isMounted) {
+          setError('Failed to load blogs');
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    fetchBlogs();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  if (loading) return <div>Loading…</div>;
+  if (error) return <div>{error}</div>;
+  const { featured, trending, latest, mostViewed } = data;
 
   const openPost = (post) => {
     router.push(`/blog/${post.id}`, { scroll: false });
   };
-
-  const featured = blogs[0];
-
-  const trending = [...blogs]
-    .sort((a, b) => b.likes + b.views - (a.likes + a.views))
-    .slice(0, 6);
-
-  const latest = [...blogs]
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice(0, 6);
-
-  const mostViewed = [...blogs]
-    .sort((a, b) => b.views - a.views)
-    .slice(0, 6);
 
   return (
     <>
@@ -41,11 +66,11 @@ export default function BlogPage() {
               </span>
 
               <h1 className="mt-4 text-5xl sm:text-6xl font-editorial italic text-[var(--text-heading)] leading-tight">
-                {featured.title}
+                {featured?.title}
               </h1>
 
               <p className="mt-6 max-w-lg text-[var(--text-secondary)]">
-                {featured.excerpt}
+                {featured?.excerpt}
               </p>
 
               <button
@@ -65,11 +90,15 @@ export default function BlogPage() {
             </div>
 
             <div className="relative h-[420px] rounded-3xl overflow-hidden group">
-              <img
-                src={featured.image}
-                alt={featured.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
+              {featured?.cover_image && (
+                <Image
+                  src={featured?.cover_image}
+                  alt={featured?.title}
+                  width={800}
+                  height={400}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+              )}
               <div className="absolute inset-0 bg-[var(--bg-primary)]/40" />
             </div>
           </div>

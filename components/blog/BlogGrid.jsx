@@ -3,7 +3,9 @@ import BlogCard from "./BlogCard";
 import Link from "next/link";
 
 const BlogGrid = ({ onSelect, posts }) => {
-  const blogArticles = posts || [];
+  const blogArticles = Array.isArray(posts) ? posts : [];
+  console.log(blogArticles)
+
 
   return (
     <>
@@ -12,7 +14,7 @@ const BlogGrid = ({ onSelect, posts }) => {
           {blogArticles.length > 0 ? (
 
             blogArticles.map((post, i) => (
-              <SectionReveal key={post.id} delay={i * 100}>
+              <SectionReveal key={post.id} delay={i * 10}>
                 <BlogCard post={post} onSelect={onSelect} />
               </SectionReveal>
             ))

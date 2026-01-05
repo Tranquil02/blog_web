@@ -5,6 +5,7 @@ import { User, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
 export default function BlogCard({ post, onSelect }) {
+  console.log(post)
   return (
     <article
       onClick={() => onSelect(post)}
@@ -18,7 +19,7 @@ export default function BlogCard({ post, onSelect }) {
     >
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         <Image
-          src={post.image}
+          src={post.cover_image}
           alt={post.title}
           fill
           sizes="(max-width: 768px) 100vw,

@@ -18,7 +18,7 @@ export default function Home() {
 
   useEffect (()=>{
     async function fetchBlogs (){
-      const data = await axios.get('/api/blog/getAll');
+      const {data} = await axios.get('/api/blog/getAll');
       setBlogs(data);
       console.log(data);
     }
@@ -81,7 +81,7 @@ export default function Home() {
               Select Archives Volume IV
             </p>
           </SectionReveal>
-
+          
           <BlogGrid onSelect={openPost} posts={blogs} />
         </section>
 
