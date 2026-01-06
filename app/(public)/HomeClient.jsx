@@ -9,8 +9,9 @@ import Newsletter from '@/components/Newsletter';
 import Connect from '@/components/Connect';
 import Footer from '@/components/footer';
 import SectionReveal from '@/components/ui/SectionReveal';
+import Link from 'next/link';
 
-export default function BlogClient({ initialBlogs }) {
+export default function HomeClient({ initialBlogs }) {
   const { data: blogs, error } = useQuery({
     queryKey: ['blogs'],
     queryFn: async () => {
@@ -40,6 +41,32 @@ export default function BlogClient({ initialBlogs }) {
         </SectionReveal>
 
         <BlogGrid posts={blogs} />
+        <div className="flex justify-center mt-16">
+          <Link
+            href="/blog"
+            className="
+            relative inline-flex items-center justify-center
+            px-6 py-3
+            text-base font-semibold
+            text-[var(--text-heading)]
+            border border-[var(--border-light)]
+            rounded-2xl
+            backdrop-blur-md
+            bg-[var(--bg-secondary)]/40
+            transition-all duration-300 ease-out
+            hover:bg-[var(--text-heading)]
+            hover:text-[var(--bg-primary)]
+            hover:shadow-[0_12px_40px_rgba(255,255,255,0.35)]
+            hover:-translate-y-0.5
+            focus:outline-none
+            focus-visible:ring-2
+            focus-visible:ring-[var(--text-heading)]/70
+            active:translate-y-0
+          "
+          >
+            View More
+          </Link>
+        </div>
       </section>
 
       <Connect />

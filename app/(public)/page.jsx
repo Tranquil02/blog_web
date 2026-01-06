@@ -1,8 +1,8 @@
 import { getAllBlogs } from '@/lib/blog';
-import BlogClient from './BlogClient';
+import HomeClient from './HomeClient';
 
 export default async function Home() {
   const blogs = await getAllBlogs(); // server fetch
 
-  return <BlogClient initialBlogs={blogs} />;
+  return <HomeClient initialBlogs={blogs} />;
 }
