@@ -47,8 +47,10 @@ export default function BlogClient() {
 
     return (
         <>
-            <main className="bg-[var(--bg-primary)] mt-32">
-
+            <main className="bg-[var(--bg-primary)] mt-24">
+                <h2 className="text-3xl sm:text-6xl lg:text-7xl italic text-center font-bold">
+                    The Blogs.
+                </h2>
                 <section className="relative min-h-[80vh] flex items-center px-6">
                     <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
                         <div>

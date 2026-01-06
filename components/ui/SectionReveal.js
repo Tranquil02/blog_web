@@ -1,12 +1,22 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
+import { useLocomotiveScroll } from "@/Provider/Locomotiveprovider";
+import { useEffect } from "react";
 
-export default function SectionReveal({ children, delay = 0, className = '' }) {
+
+export default function SectionReveal({
+  children,
+  delay = 0,
+  className = "",
+}) {
+  const scrollRef = useLocomotiveScroll();
+
   useEffect(() => {
-    // tell Locomotive new elements exist
-    window?.locomotive?.update?.();
-  }, []);
+    // 🔑 Register element AFTER mount
+    if (scrollRef?.current) {
+      scrollRef.current.update();
+    }
+  }, [scrollRef]);
 
   return (
     <div

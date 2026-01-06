@@ -16,7 +16,7 @@ export default function Connect() {
     >
       <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
 
-        <SectionReveal>
+        {/* <SectionReveal> */}
           <div>
             <h2 className="text-7xl md:text-8xl font-editorial italic text-[var(--text-heading)] leading-[0.9]">
               Stay <br /> Linked
@@ -26,11 +26,12 @@ export default function Connect() {
               and restoration logs.
             </p>
           </div>
-        </SectionReveal>
+        {/* </SectionReveal> */}
 
         <div className="grid sm:grid-cols-2 gap-6">
           {socials.map((item, i) => (
-            <SectionReveal key={item.name} delay={i * 100}>
+            <div key={item.name}>
+            {/* // <SectionReveal key={item.name} delay={i * 100}> */}
               <div
                 className="
                   group relative p-10 rounded-3xl
@@ -76,7 +77,8 @@ export default function Connect() {
                   "
                 />
               </div>
-            </SectionReveal>
+              </div>
+            // </SectionReveal> 
           ))}
         </div>
 
